@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tawhay Wellness | Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="home">
+    <div id="site-header"></div>
+
+    <main class="home-page">
+        <section class="home-hero">
+            <img src="assets/734(1) (1).png" alt="Tawhay Wellness Hero" class="home-hero-image" />
+    
+            <div class="home-hero-overlay">
+                <a href="shop.html" class="home-hero-btn">Explore Shop</a>
+            </div>
+        </section>
+    
+        <section class="home-intro">
+            <div class="home-intro-inner">
+                <h2>Pause. Breathe. Tawhay.</h2>
+                <p>
+                    Tawhay is a quiet wellness space created for slow moments and mindful rituals.
+                    Rooted in simplicity and intention, each experience is designed to help you step
+                    away from the noise and reconnect with a sense of calm.
+                </p>
+            </div>
+        </section>
+    
+        <section class="home-categories">
+            <div class="home-categories-grid">
+                <article class="home-category-card" onclick="goToCategory('mindful-essentials')">
+                    <div class="home-category-image-wrap">
+                        <img src="assets/20260321_2248_Serene Minimalist Meditation_simple_compose_01km8dvjbvey48vpcv6gcmrzv4.png"
+                            alt="Mindful Essentials" class="home-category-image" />
+                    </div>
+                    <h3>Mindful Essentials</h3>
+                </article>
+    
+                <article class="home-category-card" onclick="goToCategory('relax-and-restore')">
+                    <div class="home-category-image-wrap">
+                        <img src="assets/20260321_2253_Image Generation_simple_compose_01km8e4pcyf9mtky615wtm3jhx.png"
+                            alt="Relax & Restore" class="home-category-image" />
+                    </div>
+                    <h3>Relax &amp; Restore</h3>
+                </article>
+    
+                <article class="home-category-card" onclick="goToCategory('aromatherapy-collection')">
+                    <div class="home-category-image-wrap">
+                        <img src="assets/20260321_2249_Image Generation_simple_compose_01km8dz7tqe59sshtxdz719a9j.png"
+                            alt="Aromatherapy Collection" class="home-category-image" />
+                    </div>
+                    <h3>Aromatherapy Collection</h3>
+                </article>
+            </div>
+        </section>
+    
+        <section class="home-ritual-banner">
+            <div class="home-ritual-banner-card" onclick="window.location.href='shop.html'">
+                <img src="assets/begin your ritual.png" alt="Begin Your Ritual" class="home-ritual-image" />
+            </div>
+        </section>
+    
+        <section class="home-best-selling">
+            <div class="home-best-selling-head">
+                <h2>Best Selling</h2>
+                <a href="shop.html">View all products</a>
+            </div>
+    
+            <div class="home-products-grid">
+                <article class="home-product-card" onclick="goToProduct('hand-sanitizer')">
+                    <div class="home-product-circle">
+                        <img src="assets/Untitled design(2).png" alt="Hand Sanitizer" />
+                    </div>
+                    <h3>TAWHAY SPRAY</h3>
+                </article>
+    
+                <article class="home-product-card" onclick="goToProduct('roller-blends-kiddie')">
+                    <div class="home-product-circle">
+                        <img src="assets/Untitled design(3).png" alt="Roller Blends" />
+                    </div>
+                    <h3>Roller Blends</h3>
+                </article>
+    
+                <article class="home-product-card" onclick="goToProduct('essential-oil')">
+                    <div class="home-product-circle">
+                        <img src="assets/Untitled design(4).png" alt="Essential Oils" />
+                    </div>
+                    <h3>Essential Oils</h3>
+                </article>
+    
+                <article class="home-product-card" onclick="goToProduct('aroma-inhaler')">
+                    <div class="home-product-circle home-product-circle--dark">
+                        <img src="assets/Untitled design(5).png" alt="Aroma Inhaler" />
+                    </div>
+                    <h3>Aroma Inhaler</h3>
+                </article>
+            </div>
+        </section>
+    
+        <section class="home-testimonials">
+            <h2>Testimonials</h2>
+            <div class="home-testimonials-image-wrap">
+                <img src="assets/Untitled design(8).png" alt="Customer Reviews" />
+            </div>
+        </section>
+        </main>
+
+    <div id="site-footer"></div>
+
+    <script src="script.js"></script>
+    <script src="cart-core.js"></script>
+    <script src="layout.js"></script>
+</body>
+
+</html>

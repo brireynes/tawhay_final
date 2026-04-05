@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop Page 2 | Tawhay Wellness</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="shop2">
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+        <style>
+            .page-hero::before {
+                background-image: linear-gradient(rgba(244, 231, 219, 0.40), rgba(244, 231, 219, 0.40)), url('assets/734(1) (1).png');
+            }
+        </style>
+        <div class="page-hero-content">
+            <h1>Shop</h1>
+            <p>Home › Shop</p>
+        </div>
+    </section>
+
+    <section class="shop-toolbar">
+        <div class="shop-toolbar-inner">
+            <div class="shop-results" id="shopResultsText">Showing results</div>
+            <div id="shopPageLabel">Page 2</div>
+        </div>
+    </section>
+    
+    <section class="shop-grid-wrap">
+        <div class="shop-product-grid" id="shopGrid"></div>
+    
+        <div class="pagination" id="shopPagination"></div>
+        </section>
+
+    <div id="site-footer"></div>
+
+    <script src="script.js"></script>
+    <script src="cart-core.js"></script>
+    <script src="layout.js"></script>
+    <script src="shop-pages.js"></script>
+</body>
+
+</html>

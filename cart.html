@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart | Tawhay Wellness</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-page="cart">
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+        <style>
+            .page-hero::before {
+                background-image: linear-gradient(rgba(244, 231, 219, 0.40), rgba(244, 231, 219, 0.40)), url('assets/734(1) (1).png');
+            }
+        </style>
+        <div class="page-hero-content">
+            <h2>Cart</h2>
+        </div>
+    </section>
+
+    <main class="cart-page">
+        <section class="cart-layout">
+            <div class="cart-table-wrap">
+                <div class="cart-table-header">
+                    <div>Product</div>
+                    <div>Price</div>
+                    <div>Quantity</div>
+                    <div>Subtotal</div>
+                    <div></div>
+                </div>
+
+                <div id="cart-items"></div>
+
+                <div id="empty-cart" class="empty-cart hidden">
+                    Your cart is empty.
+                </div>
+            </div>
+
+            <aside class="cart-summary">
+                <h3>Cart Totals</h3>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">Php 0.00</span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="cart-total">Php 0.00</span>
+                </div>
+
+                <a href="checkout.html" class="primary-btn" id="checkout-btn">Check Out</a>
+            </aside>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="script.js"></script>
+    <script src="cart-core.js"></script>
+    <script src="layout.js"></script>
+    <script src="cart.js"></script>
+</body>
+
+</html>

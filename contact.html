@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Tawhay Wellness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-page="contact">
+    <div id="site-header"></div>
+
+    <section class="about-hero">
+        <img src="assets/ChatGPT Image Mar 22, 2026, 08_05_30 PM.png" class="hero-bg" alt="Contact Hero">
+    
+        <div class="hero-overlay">
+    
+            <h1>Contact</h1>
+    
+            <p class="hero-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>›</span>
+                <span>Contact</span>
+            </p>
+        </div>
+        </section>
+
+    <section class="contact-container">
+        <h2>Get In Touch With Us</h2>
+        <p class="contact-sub">
+            For more information about our product & services, please feel free to drop us an email.
+        </p>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div>
+                    <h4>Address</h4>
+                    <p>Bacolod City 6100</p>
+                </div>
+
+                <div>
+                    <h4>Phone</h4>
+                    <p>09505609585</p>
+                </div>
+
+                <div>
+                    <h4>Working Time</h4>
+                    <p>Monday–Sunday: 9:00 – 21:00</p>
+                </div>
+            </div>
+
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent!');">
+                <input type="text" placeholder="Your name" required>
+                <input type="email" placeholder="Email address" required>
+                <input type="text" placeholder="Subject">
+                <textarea placeholder="Message" rows="6"></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="site-footer"></div>
+
+    <script src="script.js"></script>
+    <script src="cart-core.js"></script>
+    <script src="layout.js"></script>
+</body>
+
+</html>
