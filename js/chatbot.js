@@ -1,15 +1,17 @@
 const toggleBtn = document.getElementById("tw-chat-toggle");
 const panel = document.getElementById("tw-chat-panel");
-const messages = document.getElementById("tw-chat-messages");
+const messagesEl = document.getElementById("tw-chat-messages");
 const input = document.getElementById("tw-chat-input");
 const sendBtn = document.getElementById("tw-chat-send");
+
+const chatHistory = [];
 
 function addMessage(role, text) {
     const div = document.createElement("div");
     div.className = `tw-msg ${role}`;
     div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
 async function sendMessage() {
@@ -17,6 +19,7 @@ async function sendMessage() {
     if (!text) return;
 
     addMessage("user", text);
+    chatHistory.push({ role: "user", content: text });
     input.value = "";
 
     try {
@@ -25,11 +28,17 @@ async function sendMessage() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ message: text })
+            body: JSON.stringify({
+                message: text,
+                history: chatHistory
+            })
         });
 
         const data = await res.json();
-        addMessage("bot", data.reply || "No reply received.");
+        const reply = data.reply || "No reply received.";
+
+        addMessage("bot", reply);
+        chatHistory.push({ role: "assistant", content: reply });
     } catch (err) {
         addMessage("bot", "Something went wrong.");
     }
@@ -40,6 +49,7 @@ toggleBtn?.addEventListener("click", () => {
 });
 
 sendBtn?.addEventListener("click", sendMessage);
+
 input?.addEventListener("keydown", (e) => {
     if (e.key === "Enter") sendMessage();
 });
