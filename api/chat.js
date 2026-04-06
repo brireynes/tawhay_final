@@ -17,28 +17,29 @@ export default async function handler(req, res) {
                 "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: "gpt-5.4",
-                input: [
-                    {
-                        role: "system",
-                        content:
-                            "You are Tawhay Wellness Assistant. Answer warmly and clearly. Help users with products, checkout guidance, store info, and basic wellness-themed product questions. Do not give medical diagnosis or medical treatment advice."
-                    },
-                    {
-                        role: "user",
-                        content: message
-                    }
-                ]
+                model: "gpt-4.1-mini", // 🔥 stable + cheaper
+                input: message
             })
         });
 
         const data = await response.json();
 
-        const reply =
-            data.output_text ||
-            "Sorry, I couldn't generate a reply right now.";
+        // 🔥 SAFE extraction
+        let reply = "";
+
+        if (data.output && data.output.length > 0) {
+            const content = data.output[0].content;
+            if (content && content.length > 0) {
+                reply = content[0].text;
+            }
+        }
+
+        if (!reply) {
+            reply = "Sorry, I couldn't generate a reply.";
+        }
 
         return res.status(200).json({ reply });
+
     } catch (error) {
         return res.status(500).json({
             error: "Server error",
