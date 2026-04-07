@@ -118,27 +118,87 @@
                     </div>
 
                     <div class="payment-methods">
+                        <h4 class="checkout-section-title">Payment Method</h4>
+
                         <label class="payment-option">
-                            <input type="radio" name="payment" value="Direct Bank Transfer" checked />
-                            <span>Direct Bank Transfer</span>
+                            <input type="radio" name="payment" value="Card" checked />
+                            <span>Credit / Debit Card</span>
                         </label>
 
-                        <p class="payment-note">
-                            Make your payment directly into our bank account. Please use your Order ID as the payment
-                            reference.
-                        </p>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="GCash" />
+                            <span>GCash</span>
+                        </label>
 
                         <label class="payment-option">
                             <input type="radio" name="payment" value="Cash On Delivery" />
                             <span>Cash On Delivery</span>
                         </label>
+
+                        <div id="payment-card-fields" class="payment-details-box">
+                            <div class="form-group">
+                                <label for="cardName">Cardholder Name</label>
+                                <input type="text" id="cardName" placeholder="Enter cardholder name" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+                            </div>
+
+                            <div class="form-grid two-col">
+                                <div class="form-group">
+                                    <label for="cardExpiry">Expiry Date</label>
+                                    <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cardCvv">CVV</label>
+                                    <input type="text" id="cardCvv" placeholder="123" maxlength="4" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="payment-gcash-fields" class="payment-details-box hidden">
+                            <div class="form-group">
+                                <label for="gcashName">Account Name</label>
+                                <input type="text" id="gcashName" placeholder="Enter GCash account name" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gcashNumber">GCash Number</label>
+                                <input type="text" id="gcashNumber" placeholder="09XXXXXXXXX" maxlength="11" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gcashReference">Reference Number</label>
+                                <input type="text" id="gcashReference" placeholder="Enter payment reference" />
+                            </div>
+                        </div>
+
+                        <div id="payment-cod-fields" class="payment-details-box hidden">
+                            <p class="payment-note">
+                                You will pay upon delivery. Please make sure your shipping details are complete and
+                                accurate.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="secure-checkout-badge">
+                        <span class="material-symbols-outlined">lock</span>
+                        <div>
+                            <strong>Secure Checkout</strong>
+                            <p>Your order details are protected within this website experience.</p>
+                        </div>
                     </div>
 
                     <p class="privacy-note">
                         Your personal data will be used to support your experience throughout this website.
                     </p>
 
-                    <button type="submit" form="checkout-form" class="primary-btn">Place order</button>
+                    <button type="submit" form="checkout-form" class="primary-btn checkout-submit-btn">
+                        Place Order
+                    </button>
                 </div>
             </aside>
         </section>
@@ -148,6 +208,7 @@
 
     <script src="script.js"></script>
     <script src="cart-core.js"></script>
+    <script src="orders.js"></script>
     <script src="layout.js"></script>
     <script src="checkout.js"></script>
 </body>
