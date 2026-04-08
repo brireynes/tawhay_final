@@ -1,5 +1,3 @@
-const ADMIN_EMAIL = "admin@tawhay.com";
-
 function getAllOrders() {
     return JSON.parse(localStorage.getItem("tawhayOrders")) || [];
 }
@@ -20,14 +18,18 @@ function checkAdminAccess() {
 function updateOrderStatus(orderId, newStatus) {
     const orders = getAllOrders();
 
-    const updated = orders.map((order) => {
+    const updatedOrders = orders.map((order) => {
         if (order.id === orderId) {
-            return { ...order, status: newStatus };
+            return {
+                ...order,
+                status: newStatus
+            };
         }
+
         return order;
     });
 
-    saveAllOrders(updated);
+    saveAllOrders(updatedOrders);
     renderAdminOrders();
 }
 
@@ -38,55 +40,82 @@ function renderAdminOrders() {
     const orders = getAllOrders();
 
     if (!orders.length) {
-        container.innerHTML = "<p>No orders found.</p>";
+        container.innerHTML = `
+            <div class="admin-order-card">
+                <p>No orders found.</p>
+            </div>
+        `;
         return;
     }
 
     container.innerHTML = "";
 
-    orders.reverse().forEach((order) => {
-        const billing = order.billing || {};
+    [...orders].reverse().forEach((order) => {
+        const billing = order.billing || order.billingDetails || {};
+
         const name =
             order.customerName ||
+            order.customer?.name ||
             `${billing.firstName || ""} ${billing.lastName || ""}`.trim() ||
+            billing.name ||
             "No name";
 
         const address =
             billing.street ||
             billing.address ||
+            order.address ||
             "No address";
 
         const city =
-            billing.city || "No city";
+            billing.city ||
+            order.city ||
+            "No city";
 
         const province =
-            billing.province || "No province";
+            billing.province ||
+            order.province ||
+            "No province";
 
         const status = order.status || "Pending";
+
+        const paymentMethod =
+            order.paymentMethod ||
+            order.payment?.method ||
+            "Not specified";
+
+        const total = Number(order.total || order.subtotal || 0).toFixed(2);
 
         const card = document.createElement("div");
         card.className = "admin-order-card";
 
         card.innerHTML = `
             <div class="admin-order-header">
-                <h3>Order #${order.id}</h3>
+                <div>
+                    <h3>Order #${order.id || "No ID"}</h3>
+                </div>
                 <span class="admin-order-status">${status}</span>
             </div>
 
             <div class="admin-order-body">
-                <p><strong>Customer:</strong> ${name}</p>
-                <p><strong>Address:</strong> ${address}</p>
-                <p><strong>City/Province:</strong> ${city}, ${province}</p>
-                <p><strong>Total:</strong> ₱${order.total}</p>
-                <p><strong>Payment:</strong> ${order.paymentMethod}</p>
+                <div class="admin-order-box">
+                    <p><strong>Customer:</strong> ${name}</p>
+                    <p><strong>Address:</strong> ${address}</p>
+                    <p><strong>City/Province:</strong> ${city}, ${province}</p>
+                </div>
+
+                <div class="admin-order-box">
+                    <p><strong>Total:</strong> ₱${total}</p>
+                    <p><strong>Payment:</strong> ${paymentMethod}</p>
+                    <p><strong>Status:</strong> ${status}</p>
+                </div>
             </div>
 
             <div class="admin-order-actions">
                 <select onchange="updateOrderStatus('${order.id}', this.value)">
-                    <option ${status === "Pending" ? "selected" : ""}>Pending</option>
-                    <option ${status === "Processing" ? "selected" : ""}>Processing</option>
-                    <option ${status === "Shipped" ? "selected" : ""}>Shipped</option>
-                    <option ${status === "Completed" ? "selected" : ""}>Completed</option>
+                    <option value="Pending" ${status === "Pending" ? "selected" : ""}>Pending</option>
+                    <option value="Processing" ${status === "Processing" ? "selected" : ""}>Processing</option>
+                    <option value="Shipped" ${status === "Shipped" ? "selected" : ""}>Shipped</option>
+                    <option value="Completed" ${status === "Completed" ? "selected" : ""}>Completed</option>
                 </select>
             </div>
         `;

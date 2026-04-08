@@ -7,22 +7,32 @@
     <title>Admin Dashboard | Tawhay Wellness</title>
 
     <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body data-page="admin">
     <div id="site-header"></div>
 
     <section class="page-hero">
+        <style>
+            .page-hero::before {
+                background-image: linear-gradient(rgba(244, 231, 219, 0.40), rgba(244, 231, 219, 0.40)), url('assets/734(1) (1).png');
+            }
+        </style>
         <div class="page-hero-content">
             <h2>Admin Dashboard</h2>
         </div>
     </section>
 
-    <main class="dashboard-page">
-        <section class="dashboard-card">
-            <h2>All Orders</h2>
+    <main class="checkout-page">
+        <section class="admin-dashboard-wrap">
+            <div class="admin-dashboard-header">
+                <h1>All Orders</h1>
+                <p>Manage customer orders and update their status.</p>
+            </div>
 
-            <div id="adminOrdersContainer">
+            <div id="adminOrdersContainer" class="admin-orders-list">
                 <p>Loading orders...</p>
             </div>
         </section>

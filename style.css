@@ -2357,36 +2357,110 @@ img {
 }
 
 /* ADMIN DASHBOARD */
+/* ADMIN DASHBOARD */
+.admin-dashboard-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-dashboard-header {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+}
+
+.admin-dashboard-header h1 {
+    font-size: 34px;
+    margin-bottom: 8px;
+}
+
+.admin-dashboard-header p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.admin-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
 .admin-order-card {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.06);
 }
 
 .admin-order-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
-.admin-order-status {
-    background: #f3efe8;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 14px;
-}
-
-.admin-order-body p {
+.admin-order-header h3 {
+    font-size: 24px;
     margin-bottom: 6px;
 }
 
+.admin-order-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #e8f2e8;
+    color: #36543b;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.admin-order-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.admin-order-box {
+    background: #f9f5ef;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.admin-order-box p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
 .admin-order-actions {
-    margin-top: 12px;
+    margin-top: 8px;
 }
 
 .admin-order-actions select {
-    padding: 8px;
-    border-radius: 8px;
+    min-width: 220px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+@media (max-width: 768px) {
+    .admin-order-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-order-body {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-dashboard-header h1 {
+        font-size: 28px;
+    }
 }
