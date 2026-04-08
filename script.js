@@ -426,7 +426,7 @@ function checkUserState() {
 
     if (user.role === "admin") {
         accountBtn.innerHTML = `
-            <button class="tw-icon-btn" onclick="logoutUser()" title="Logout">
+            <button class="tw-icon-btn" onclick="logoutUser()" title="Logout" type="button">
                 <span class="material-symbols-outlined">logout</span>
             </button>
         `;

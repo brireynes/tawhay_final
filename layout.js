@@ -22,10 +22,15 @@ function setActiveNav() {
         checkout: "shop",
         about: "about",
         contact: "contact",
-        auth: ""
+        faq: "",
+        policy: "",
+        auth: "",
+        dashboard: "",
+        admin: "admin"
     };
 
     const activeKey = activeMap[page];
+
     document.querySelectorAll("#globalNav [data-nav]").forEach((link) => {
         link.classList.remove("active");
         if (link.dataset.nav === activeKey) {
@@ -34,10 +39,40 @@ function setActiveNav() {
     });
 }
 
+function configureAdminChrome() {
+    const page = document.body?.dataset?.page || "";
+    if (page !== "admin") return;
+
+    const nav = document.getElementById("globalNav");
+    if (nav) {
+        nav.innerHTML = `
+            <a href="admin.html" data-nav="admin">Orders</a>
+            <a href="dashboard.html" data-nav="dashboard">Customer View</a>
+        `;
+    }
+
+    const footer = document.querySelector(".tw-footer");
+    if (footer) {
+        footer.classList.add("tw-footer--admin");
+    }
+
+    const footerBrandHeading = document.querySelector(".tw-footer-brand h3");
+    if (footerBrandHeading) {
+        footerBrandHeading.textContent = "Tawhay Wellness Admin";
+    }
+
+    const footerBrandText = document.querySelector(".tw-footer-brand p");
+    if (footerBrandText) {
+        footerBrandText.textContent = "Manage orders, customer activity, and store operations.";
+    }
+}
+
 function initializeSharedUI() {
     if (typeof updateCartCount === "function") updateCartCount();
     if (typeof checkUserState === "function") checkUserState();
     if (typeof initializeSearchUI === "function") initializeSearchUI();
+
+    configureAdminChrome();
     setActiveNav();
 }
 

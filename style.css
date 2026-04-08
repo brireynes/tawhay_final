@@ -2486,3 +2486,35 @@ body[data-page="admin"] .cart-icon,
 body[data-page="admin"] #cart-count {
     display: none !important;
 }
+
+/* ADMIN MODE HEADER / FOOTER */
+body[data-page="admin"] #searchShell,
+body[data-page="admin"] .tw-cart-link {
+    display: none !important;
+}
+
+body[data-page="admin"] .tw-nav {
+    gap: 28px;
+}
+
+body[data-page="admin"] .tw-nav a {
+    font-weight: 600;
+}
+
+.tw-footer--admin .tw-footer-features,
+.tw-footer--admin .tw-footer-links,
+.tw-footer--admin .tw-footer-socials {
+    display: none !important;
+}
+
+.tw-footer--admin .tw-footer-main {
+    grid-template-columns: 1.4fr 1fr 1fr;
+}
+
+.tw-footer--admin .tw-footer-column:first-of-type h4 {
+    color: #36543b;
+}
+
+.tw-footer--admin .tw-footer-column a:hover {
+    color: #36543b;
+}
