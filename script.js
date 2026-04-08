@@ -337,6 +337,14 @@ function initializeSearchUI() {
     });
 }
 
+function getUsers() {
+    return JSON.parse(localStorage.getItem("tawhayUsers")) || [];
+}
+
+function saveUsers(users) {
+    localStorage.setItem("tawhayUsers", JSON.stringify(users));
+}
+
 function registerUser() {
     const name = document.getElementById("regName")?.value.trim();
     const email = document.getElementById("regEmail")?.value.trim();
@@ -347,8 +355,24 @@ function registerUser() {
         return;
     }
 
-    const user = { name, email, password };
-    localStorage.setItem("tawhayUser", JSON.stringify(user));
+    const users = getUsers();
+
+    const existingUser = users.find(u => u.email === email);
+    if (existingUser) {
+        alert("Email already registered.");
+        return;
+    }
+
+    const newUser = {
+        name,
+        email,
+        password,
+        role: email === "admin@tawhay.com" ? "admin" : "user"
+    };
+
+    users.push(newUser);
+    saveUsers(users);
+
     alert("Registered successfully!");
     window.location.href = "login.html";
 }
@@ -356,25 +380,33 @@ function registerUser() {
 function loginUser() {
     const email = document.getElementById("loginEmail")?.value.trim();
     const password = document.getElementById("loginPassword")?.value.trim();
-    const savedUser = JSON.parse(localStorage.getItem("tawhayUser"));
 
-    if (!savedUser) {
-        alert("No account found. Please register.");
+    const users = getUsers();
+
+    const user = users.find(
+        u => u.email === email && u.password === password
+    );
+
+    if (!user) {
+        alert("Invalid credentials.");
         return;
     }
 
-    if (email === savedUser.email && password === savedUser.password) {
-        localStorage.setItem("tawhayCurrentUser", JSON.stringify(savedUser));
-        alert("Login successful!");
-        window.location.href = "index.html";
+    localStorage.setItem("tawhayCurrentUser", JSON.stringify(user));
+
+    alert("Login successful!");
+
+    // 🔥 ADMIN REDIRECT
+    if (user.role === "admin") {
+        window.location.href = "admin.html";
     } else {
-        alert("Invalid credentials.");
+        window.location.href = "dashboard.html";
     }
 }
 
 function logoutUser() {
     localStorage.removeItem("tawhayCurrentUser");
-    window.location.reload();
+    window.location.href = "index.html";
 }
 
 function checkUserState() {
@@ -383,9 +415,19 @@ function checkUserState() {
     if (!accountBtn) return;
 
     if (user) {
-        accountBtn.innerHTML = `<button class="tw-icon-btn" onclick="logoutUser()" title="Logout"><span class="material-symbols-outlined">logout</span></button>`;
+        const link = user.role === "admin" ? "admin.html" : "dashboard.html";
+
+        accountBtn.innerHTML = `
+            <a href="${link}" class="tw-icon-link" title="Account">
+                <span class="material-symbols-outlined">person</span>
+            </a>
+        `;
     } else {
-        accountBtn.innerHTML = `<a href="login.html" class="tw-icon-link" title="Login"><span class="material-symbols-outlined">person</span></a>`;
+        accountBtn.innerHTML = `
+            <a href="login.html" class="tw-icon-link" title="Login">
+                <span class="material-symbols-outlined">person</span>
+            </a>
+        `;
     }
 }
 
