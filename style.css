@@ -2508,13 +2508,23 @@ body[data-page="admin"] .tw-nav a {
 }
 
 .tw-footer--admin .tw-footer-main {
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
 }
 
-.tw-footer--admin .tw-footer-column:first-of-type h4 {
-    color: #36543b;
+.tw-footer--admin .tw-footer-column p,
+.tw-footer--admin .tw-footer-column a,
+.tw-footer--admin .tw-footer-brand p {
+    line-height: 1.7;
 }
 
-.tw-footer--admin .tw-footer-column a:hover {
-    color: #36543b;
+@media (max-width: 1100px) {
+    .tw-footer--admin .tw-footer-main {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tw-footer--admin .tw-footer-main {
+        grid-template-columns: 1fr;
+    }
 }

@@ -61,9 +61,36 @@ function configureAdminChrome() {
         footerBrandHeading.textContent = "Tawhay Wellness Admin";
     }
 
-    const footerBrandText = document.querySelector(".tw-footer-brand p");
-    if (footerBrandText) {
-        footerBrandText.textContent = "Manage orders, customer activity, and store operations.";
+    const footerMain = document.querySelector(".tw-footer-main");
+    if (footerMain) {
+        footerMain.innerHTML = `
+            <div class="tw-footer-brand">
+                <img src="assets/ChatGPT_Image_Mar_21__2026__10_10_56_PM-removebg-preview.png"
+                    alt="Tawhay Wellness Logo"
+                    class="tw-footer-logo">
+                <div>
+                    <h3>Tawhay Wellness Admin</h3>
+                    <p>Manage orders, customer activity, and store operations.</p>
+                </div>
+            </div>
+
+            <div class="tw-footer-column">
+                <h4>ADMIN NAVIGATION</h4>
+                <a href="admin.html">Orders</a>
+                <a href="dashboard.html">Customer View</a>
+            </div>
+
+            <div class="tw-footer-column">
+                <h4>ADMIN ACCESS</h4>
+                <p>Logged in as Administrator</p>
+                <p>Secure admin session active</p>
+            </div>
+
+            <div class="tw-footer-column">
+                <h4>SYSTEM NOTE</h4>
+                <p>This dashboard is intended for managing Tawhay Wellness order activity and operations.</p>
+            </div>
+        `;
     }
 }
 
