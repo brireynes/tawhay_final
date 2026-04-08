@@ -78,46 +78,87 @@ function renderDashboardOrders() {
     }
 
     container.innerHTML = userOrders.map((order) => {
-        const itemsHtml = order.items.map((item) => {
-            const itemSubtotal = Number(item.price) * Number(item.quantity);
+        const items = Array.isArray(order.items) ? order.items : [];
+        const paymentMethod =
+            order.payment?.method ||
+            order.paymentMethod ||
+            "Not specified";
 
-            return `
-                <div class="dashboard-order-item">
-                    <div>
-                        <strong>${item.name}</strong>
-                        <div class="dashboard-order-item-meta">
-                            ${item.variation ? `${item.variation} · ` : ""}Qty: ${item.quantity}
+        const total =
+            typeof order.total !== "undefined"
+                ? order.total
+                : typeof order.subtotal !== "undefined"
+                    ? order.subtotal
+                    : 0;
+
+        const deliveryEstimate =
+            order.deliveryEstimate ||
+            order.estimatedDelivery ||
+            "3–5 business days";
+
+        const status = order.status || "Order Placed";
+
+        const billing = order.billing || {};
+        const fullName =
+            `${billing.firstName || ""} ${billing.lastName || ""}`.trim() ||
+            order.customer?.name ||
+            "No customer name";
+
+        const addressLine1 =
+            billing.street ||
+            order.address ||
+            "No address provided";
+
+        const addressLine2 =
+            [billing.city, billing.province].filter(Boolean).join(", ") ||
+            "No city/province provided";
+
+        const addressLine3 =
+            [billing.country, billing.zip].filter(Boolean).join(", ") ||
+            "";
+
+        const itemsHtml = items.length
+            ? items.map((item) => {
+                const itemSubtotal = Number(item.price || 0) * Number(item.quantity || 0);
+
+                return `
+                    <div class="dashboard-order-item">
+                        <div>
+                            <strong>${item.name || "Unnamed Item"}</strong>
+                            <div class="dashboard-order-item-meta">
+                                ${item.variation ? `${item.variation} · ` : ""}Qty: ${item.quantity || 0}
+                            </div>
                         </div>
+                        <div>${formatPrice(itemSubtotal)}</div>
                     </div>
-                    <div>${formatPrice(itemSubtotal)}</div>
-                </div>
-            `;
-        }).join("");
+                `;
+            }).join("")
+            : `<p>No item details available for this order.</p>`;
 
         return `
             <article class="dashboard-order-card">
                 <div class="dashboard-order-top">
                     <div>
-                        <h3>${order.id}</h3>
-                        <p class="dashboard-order-date">${formatOrderDate(order.createdAt)}</p>
+                        <h3>${order.id || "No Order ID"}</h3>
+                        <p class="dashboard-order-date">${order.createdAt ? formatOrderDate(order.createdAt) : "No date available"}</p>
                     </div>
-                    <span class="dashboard-order-status">${order.status}</span>
+                    <span class="dashboard-order-status">${status}</span>
                 </div>
 
                 <div class="dashboard-order-meta-grid">
                     <div class="dashboard-order-meta-box">
                         <h4>Order Details</h4>
-                        <p><strong>Payment:</strong> ${order.payment.method}</p>
-                        <p><strong>Total:</strong> ${formatPrice(order.total)}</p>
-                        <p><strong>Delivery Estimate:</strong> ${order.deliveryEstimate}</p>
+                        <p><strong>Payment:</strong> ${paymentMethod}</p>
+                        <p><strong>Total:</strong> ${formatPrice(total)}</p>
+                        <p><strong>Delivery Estimate:</strong> ${deliveryEstimate}</p>
                     </div>
 
                     <div class="dashboard-order-meta-box">
                         <h4>Shipping Information</h4>
-                        <p>${order.billing.firstName} ${order.billing.lastName}</p>
-                        <p>${order.billing.street}</p>
-                        <p>${order.billing.city}, ${order.billing.province}</p>
-                        <p>${order.billing.country}, ${order.billing.zip}</p>
+                        <p>${fullName}</p>
+                        <p>${addressLine1}</p>
+                        <p>${addressLine2}</p>
+                        ${addressLine3 ? `<p>${addressLine3}</p>` : ""}
                     </div>
                 </div>
 
