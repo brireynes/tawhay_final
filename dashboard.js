@@ -10,6 +10,7 @@ function getCurrentUser() {
 
 function formatOrderDate(dateString) {
     const date = new Date(dateString);
+
     return date.toLocaleString("en-PH", {
         year: "numeric",
         month: "long",
@@ -54,8 +55,13 @@ function renderDashboardUser() {
     const nameEl = document.getElementById("dashboardUserName");
     const emailEl = document.getElementById("dashboardUserEmail");
 
-    if (nameEl) nameEl.textContent = user.name || "Tawhay User";
-    if (emailEl) emailEl.textContent = user.email || "No email found";
+    if (nameEl) {
+        nameEl.textContent = user.name || "Tawhay User";
+    }
+
+    if (emailEl) {
+        emailEl.textContent = user.email || "No email found";
+    }
 
     return true;
 }
@@ -77,98 +83,144 @@ function renderDashboardOrders() {
         return;
     }
 
-    container.innerHTML = userOrders.map((order) => {
-        const items = Array.isArray(order.items) ? order.items : [];
-        const paymentMethod =
-            order.payment?.method ||
-            order.paymentMethod ||
-            "Not specified";
+    container.innerHTML = userOrders
+        .map((order) => {
+            const items = Array.isArray(order.items) ? order.items : [];
 
-        const total =
-            typeof order.total !== "undefined"
-                ? order.total
-                : typeof order.subtotal !== "undefined"
-                    ? order.subtotal
-                    : 0;
+            const paymentMethod =
+                order.payment?.method ||
+                order.paymentMethod ||
+                "Not specified";
 
-        const deliveryEstimate =
-            order.deliveryEstimate ||
-            order.estimatedDelivery ||
-            "3–5 business days";
+            const total =
+                typeof order.total !== "undefined"
+                    ? order.total
+                    : typeof order.subtotal !== "undefined"
+                        ? order.subtotal
+                        : 0;
 
-        const status = order.status || "Order Placed";
+            const deliveryEstimate =
+                order.deliveryEstimate ||
+                order.estimatedDelivery ||
+                "3–5 business days";
 
-        const billing = order.billing || {};
-        const fullName =
-            `${billing.firstName || ""} ${billing.lastName || ""}`.trim() ||
-            order.customer?.name ||
-            "No customer name";
+            const status = order.status || "Order Placed";
 
-        const addressLine1 =
-            billing.street ||
-            order.address ||
-            "No address provided";
+            const billing = order.billing || {};
 
-        const addressLine2 =
-            [billing.city, billing.province].filter(Boolean).join(", ") ||
-            "No city/province provided";
+            const fullName =
+                `${billing.firstName || ""} ${billing.lastName || ""}`.trim() ||
+                billing.name ||
+                order.name ||
+                order.customer?.name ||
+                "No customer name";
 
-        const addressLine3 =
-            [billing.country, billing.zip].filter(Boolean).join(", ") ||
-            "";
+            const addressLine1 =
+                billing.street ||
+                billing.address ||
+                order.street ||
+                order.address ||
+                "No address provided";
 
-        const itemsHtml = items.length
-            ? items.map((item) => {
-                const itemSubtotal = Number(item.price || 0) * Number(item.quantity || 0);
+            const cityValue =
+                billing.city ||
+                order.city ||
+                "";
 
-                return `
-                    <div class="dashboard-order-item">
+            const provinceValue =
+                billing.province ||
+                order.province ||
+                "";
+
+            const addressLine2 =
+                [cityValue, provinceValue].filter(Boolean).join(", ") ||
+                "No city/province provided";
+
+            const countryValue =
+                billing.country ||
+                order.country ||
+                "";
+
+            const zipValue =
+                billing.zip ||
+                order.zip ||
+                "";
+
+            const addressLine3 =
+                [countryValue, zipValue].filter(Boolean).join(" ") ||
+                "";
+
+            const phoneValue =
+                billing.phone ||
+                order.phone ||
+                "";
+
+            const emailValue =
+                billing.email ||
+                order.userEmail ||
+                order.email ||
+                "";
+
+            const itemsHtml = items.length
+                ? items
+                    .map((item) => {
+                        const itemSubtotal =
+                            Number(item.price || 0) * Number(item.quantity || 0);
+
+                        return `
+                              <div class="dashboard-order-item">
+                                  <div>
+                                      <strong>${item.name || "Unnamed Item"}</strong>
+                                      <div class="dashboard-order-item-meta">
+                                          ${item.variation ? `${item.variation} · ` : ""}Qty: ${item.quantity || 0}
+                                      </div>
+                                  </div>
+                                  <div>${formatPrice(itemSubtotal)}</div>
+                              </div>
+                          `;
+                    })
+                    .join("")
+                : `<p>No item details available for this order.</p>`;
+
+            return `
+                <article class="dashboard-order-card">
+                    <div class="dashboard-order-top">
                         <div>
-                            <strong>${item.name || "Unnamed Item"}</strong>
-                            <div class="dashboard-order-item-meta">
-                                ${item.variation ? `${item.variation} · ` : ""}Qty: ${item.quantity || 0}
-                            </div>
+                            <h3>${order.id || "No Order ID"}</h3>
+                            <p class="dashboard-order-date">
+                                ${order.createdAt ? formatOrderDate(order.createdAt) : "No date available"}
+                            </p>
                         </div>
-                        <div>${formatPrice(itemSubtotal)}</div>
-                    </div>
-                `;
-            }).join("")
-            : `<p>No item details available for this order.</p>`;
-
-        return `
-            <article class="dashboard-order-card">
-                <div class="dashboard-order-top">
-                    <div>
-                        <h3>${order.id || "No Order ID"}</h3>
-                        <p class="dashboard-order-date">${order.createdAt ? formatOrderDate(order.createdAt) : "No date available"}</p>
-                    </div>
-                    <span class="dashboard-order-status">${status}</span>
-                </div>
-
-                <div class="dashboard-order-meta-grid">
-                    <div class="dashboard-order-meta-box">
-                        <h4>Order Details</h4>
-                        <p><strong>Payment:</strong> ${paymentMethod}</p>
-                        <p><strong>Total:</strong> ${formatPrice(total)}</p>
-                        <p><strong>Delivery Estimate:</strong> ${deliveryEstimate}</p>
+                        <span class="dashboard-order-status">${status}</span>
                     </div>
 
-                    <div class="dashboard-order-meta-box">
-                        <h4>Shipping Information</h4>
-                        <p>${fullName}</p>
-                        <p>${addressLine1}</p>
-                        <p>${addressLine2}</p>
-                        ${addressLine3 ? `<p>${addressLine3}</p>` : ""}
-                    </div>
-                </div>
+                    <div class="dashboard-order-meta-grid">
+                        <div class="dashboard-order-meta-box">
+                            <h4>Order Details</h4>
+                            <p><strong>Payment:</strong> ${paymentMethod}</p>
+                            <p><strong>Total:</strong> ${formatPrice(total)}</p>
+                            <p><strong>Delivery Estimate:</strong> ${deliveryEstimate}</p>
+                        </div>
 
-                <div class="dashboard-order-items-box">
-                    <h4>Items Ordered</h4>
-                    ${itemsHtml}
-                </div>
-            </article>
-        `;
-    }).join("");
+                        <div class="dashboard-order-meta-box">
+                            <h4>Shipping Information</h4>
+                            <p>${fullName}</p>
+                            <p>${addressLine1}</p>
+                            <p>${addressLine2}</p>
+                            ${addressLine3 ? `<p>${addressLine3}</p>` : ""}
+                            ${phoneValue ? `<p>${phoneValue}</p>` : ""}
+                            ${emailValue ? `<p>${emailValue}</p>` : ""}
+                        </div>
+                    </div>
+
+                    <div class="dashboard-order-items-box">
+                        <h4>Items Ordered</h4>
+                        ${itemsHtml}
+                    </div>
+                </article>
+            `;
+        })
+        .join("");
 }
 
 function attachDashboardEvents() {
@@ -183,6 +235,7 @@ function attachDashboardEvents() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const allowed = renderDashboardUser();
+
     if (!allowed) return;
 
     renderDashboardOrders();
