@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Tawhay Wellness</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-page="checkout">
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+        <style>
+            .page-hero::before {
+                background-image: linear-gradient(rgba(244, 231, 219, 0.40), rgba(244, 231, 219, 0.40)), url('assets/734(1) (1).png');
+            }
+        </style>
+        <div class="page-hero-content">
+            <h2>My Dashboard</h2>
+        </div>
+    </section>
+
+    <main class="checkout-page">
+        <section class="dashboard-wrap">
+            <div class="dashboard-grid">
+                <aside class="dashboard-sidebar">
+                    <div class="dashboard-profile-card">
+                        <div class="dashboard-avatar">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <h3 id="dashboardUserName">User Name</h3>
+                        <p id="dashboardUserEmail">user@email.com</p>
+                    </div>
+
+                    <div class="dashboard-quick-actions">
+                        <h4>Quick Actions</h4>
+                        <a href="shop.html" class="primary-btn dashboard-action-btn">Continue Shopping</a>
+                        <a href="cart.html" class="primary-btn dashboard-action-btn">View Cart</a>
+                        <button id="dashboardLogoutBtn" class="primary-btn dashboard-action-btn" type="button">
+                            Logout
+                        </button>
+                    </div>
+                </aside>
+
+                <div class="dashboard-main">
+                    <section class="dashboard-section">
+                        <div class="dashboard-section-head">
+                            <h2>Recent Orders</h2>
+                            <p>Your latest Tawhay Wellness purchases.</p>
+                        </div>
+                        <div id="dashboardOrdersList" class="dashboard-orders-list"></div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="script.js"></script>
+    <script src="cart-core.js"></script>
+    <script src="layout.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
