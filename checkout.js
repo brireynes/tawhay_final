@@ -170,11 +170,15 @@ function handleCheckoutForm() {
 
         const order = createOrder({
             userEmail: currentUser?.email || billingDetails.email,
+
             customerName: `${billingDetails.firstName} ${billingDetails.lastName}`.trim(),
+
             items: cart,
             subtotal: subtotal,
             total: subtotal,
-            billingDetails: billingDetails,
+
+            billing: billingDetails,
+
             paymentMethod: paymentMethod,
             paymentDetails: paymentDetails
         });
