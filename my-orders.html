@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Orders | Tawhay Wellness</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-page="checkout">
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+        <style>
+            .page-hero::before {
+                background-image: linear-gradient(rgba(244, 231, 219, 0.40), rgba(244, 231, 219, 0.40)), url('assets/734(1) (1).png');
+            }
+        </style>
+        <div class="page-hero-content">
+            <h2>My Orders</h2>
+        </div>
+    </section>
+
+    <main class="checkout-page">
+        <section class="my-orders-wrap">
+            <div class="my-orders-header-card">
+                <h1>Order History</h1>
+                <p>View your recent and past Tawhay Wellness orders.</p>
+            </div>
+
+            <div id="my-orders-list" class="my-orders-list"></div>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="script.js"></script>
+    <script src="cart-core.js"></script>
+    <script src="layout.js"></script>
+    <script src="my-orders.js"></script>
+</body>
+
+</html>
