@@ -25,8 +25,20 @@ function getOrdersForCurrentUser() {
 
     if (!currentUser) return [];
 
+    const currentEmail = (currentUser.email || "").trim().toLowerCase();
+
     return allOrders.filter((order) => {
-        return order.customer && order.customer.email === currentUser.email;
+        const customerEmail = (order.customer?.email || "").trim().toLowerCase();
+        const billingEmail = (order.billing?.email || "").trim().toLowerCase();
+        const userEmail = (order.userEmail || "").trim().toLowerCase();
+        const email = (order.email || "").trim().toLowerCase();
+
+        return (
+            customerEmail === currentEmail ||
+            billingEmail === currentEmail ||
+            userEmail === currentEmail ||
+            email === currentEmail
+        );
     });
 }
 
