@@ -124,7 +124,18 @@ function renderAdminOrders() {
     });
 }
 
+function attachAdminEvents() {
+    const logoutBtn = document.getElementById("adminLogoutBtn");
+    if (!logoutBtn) return;
+
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("tawhayCurrentUser");
+        window.location.href = "login.html";
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     checkAdminAccess();
     renderAdminOrders();
+    attachAdminEvents();
 });
