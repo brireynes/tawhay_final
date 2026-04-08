@@ -2478,3 +2478,11 @@ img {
         align-items: flex-start;
     }
 }
+
+/* ADMIN HEADER CLEANUP */
+body[data-page="admin"] #searchShell,
+body[data-page="admin"] a[href="cart.html"],
+body[data-page="admin"] .cart-icon,
+body[data-page="admin"] #cart-count {
+    display: none !important;
+}

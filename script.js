@@ -412,23 +412,32 @@ function logoutUser() {
 function checkUserState() {
     const accountBtn = document.getElementById("accountBtn");
     const user = JSON.parse(localStorage.getItem("tawhayCurrentUser"));
+
     if (!accountBtn) return;
 
-    if (user) {
-        const link = user.role === "admin" ? "admin.html" : "dashboard.html";
-
-        accountBtn.innerHTML = `
-            <a href="${link}" class="tw-icon-link" title="Account">
-                <span class="material-symbols-outlined">person</span>
-            </a>
-        `;
-    } else {
+    if (!user) {
         accountBtn.innerHTML = `
             <a href="login.html" class="tw-icon-link" title="Login">
                 <span class="material-symbols-outlined">person</span>
             </a>
         `;
+        return;
     }
+
+    if (user.role === "admin") {
+        accountBtn.innerHTML = `
+            <button class="tw-icon-btn" onclick="logoutUser()" title="Logout">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+        `;
+        return;
+    }
+
+    accountBtn.innerHTML = `
+        <a href="dashboard.html" class="tw-icon-link" title="My Dashboard">
+            <span class="material-symbols-outlined">person</span>
+        </a>
+    `;
 }
 
 function isUserLoggedIn() {
