@@ -108,3 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadPartial("site-footer", "partials/footer.html");
     initializeSharedUI();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    checkUserState();
+});

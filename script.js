@@ -415,6 +415,7 @@ function checkUserState() {
 
     if (!accountBtn) return;
 
+    // NOT LOGGED IN
     if (!user) {
         accountBtn.innerHTML = `
             <a href="login.html" class="tw-icon-link" title="Login">
@@ -424,19 +425,31 @@ function checkUserState() {
         return;
     }
 
+    // ADMIN (logout only)
     if (user.role === "admin") {
         accountBtn.innerHTML = `
-            <button class="tw-icon-btn" onclick="logoutUser()" title="Logout" type="button">
+            <button class="tw-icon-btn" onclick="logoutUser()" title="Logout">
                 <span class="material-symbols-outlined">logout</span>
             </button>
         `;
         return;
     }
 
+    // ✅ USER (KEEP user icon + ADD logout icon)
     accountBtn.innerHTML = `
-        <a href="dashboard.html" class="tw-icon-link" title="My Dashboard">
-            <span class="material-symbols-outlined">person</span>
-        </a>
+        <div style="display:flex; align-items:center; gap:12px;">
+            
+            <!-- USER ICON -->
+            <a href="dashboard.html" class="tw-icon-link" title="Dashboard">
+                <span class="material-symbols-outlined">person</span>
+            </a>
+
+            <!-- LOGOUT ICON -->
+            <button class="tw-icon-btn" onclick="logoutUser()" title="Logout">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+
+        </div>
     `;
 }
 
