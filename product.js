@@ -33,15 +33,9 @@ function renderProductPage() {
                     ${product.oldPrice ? `<span class="old">${formatPricePHP(product.oldPrice)}</span>` : ""}
                     </div>
 
-                    <p class="product-stock ${product.stock <= 0 ? 'out' : product.stock <= 5 ? 'low' : 'in'}">
-                        ${product.stock <= 0
-                                    ? 'Out of Stock'
-                                    : product.stock <= 5
-                                        ? `Hurry — only ${product.stock} left`
-                                        : `${product.stock} items available`
-                        }
+                    <p class="product-stock ${product.stock <= 0 ? 'out' : 'in'}">
+                        ${product.stock <= 0 ? 'Out of Stock' : `Stock: ${product.stock}`}
                     </p>
-
                     <p class="product-description">${product.description}</p>
 
                     <div class="variation-label">Variation</div>
