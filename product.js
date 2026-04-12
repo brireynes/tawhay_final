@@ -34,7 +34,12 @@ function renderProductPage() {
                     </div>
 
                     <p class="product-stock ${product.stock <= 0 ? 'out' : product.stock <= 5 ? 'low' : 'in'}">
-                        ${product.stock <= 0 ? 'Out of Stock' : product.stock <= 5 ? 'Low Stock' : 'In Stock'}
+                        ${product.stock <= 0
+                                    ? 'Out of Stock'
+                                    : product.stock <= 5
+                                        ? `Hurry — only ${product.stock} left`
+                                        : `${product.stock} items available`
+                        }
                     </p>
 
                     <p class="product-description">${product.description}</p>
