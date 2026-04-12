@@ -45,10 +45,7 @@ function configureAdminChrome() {
 
     const nav = document.getElementById("globalNav");
     if (nav) {
-        nav.innerHTML = `
-            <a href="admin.html" data-nav="admin">Orders</a>
-            <a href="dashboard.html" data-nav="dashboard">Customer View</a>
-        `;
+        nav.innerHTML = ``;
     }
 
     const footer = document.querySelector(".tw-footer");
@@ -69,26 +66,22 @@ function configureAdminChrome() {
                     alt="Tawhay Wellness Logo"
                     class="tw-footer-logo">
                 <div>
-                    <h3>Tawhay Wellness Admin</h3>
-                    <p>Manage orders, customer activity, and store operations.</p>
+                    <h3>Tawhay Admin Panel</h3>
+                    <p>Order management system for Tawhay Wellness.</p>
                 </div>
             </div>
-
+    
             <div class="tw-footer-column">
-                <h4>ADMIN NAVIGATION</h4>
-                <a href="admin.html">Orders</a>
-                <a href="dashboard.html">Customer View</a>
+                <h4>ADMIN PANEL</h4>
+                <p>Manage customer orders</p>
+                <p>Update order status</p>
+                <p>Monitor transactions</p>
             </div>
-
+    
             <div class="tw-footer-column">
-                <h4>ADMIN ACCESS</h4>
-                <p>Logged in as Administrator</p>
-                <p>Secure admin session active</p>
-            </div>
-
-            <div class="tw-footer-column">
-                <h4>SYSTEM NOTE</h4>
-                <p>This dashboard is intended for managing Tawhay Wellness order activity and operations.</p>
+                <h4>SYSTEM STATUS</h4>
+                <p>Admin session active</p>
+                <p>Local storage mode</p>
             </div>
         `;
     }
