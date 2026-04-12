@@ -29,9 +29,13 @@ function renderProductPage() {
                     <h1 class="product-title">${product.name}</h1>
 
                     <div class="product-price-row">
-                        ${formatPricePHP(selectedVariation.price)}
-                        ${product.oldPrice ? `<span class="old">${formatPricePHP(product.oldPrice)}</span>` : ""}
+                    ${formatPricePHP(selectedVariation.price)}
+                    ${product.oldPrice ? `<span class="old">${formatPricePHP(product.oldPrice)}</span>` : ""}
                     </div>
+
+                    <p class="product-stock ${product.stock <= 0 ? 'out' : product.stock <= 5 ? 'low' : 'in'}">
+                        ${product.stock <= 0 ? 'Out of Stock' : product.stock <= 5 ? 'Low Stock' : 'In Stock'}
+                    </p>
 
                     <p class="product-description">${product.description}</p>
 
@@ -53,9 +57,14 @@ function renderProductPage() {
                             <button type="button" id="increaseQty">+</button>
                         </div>
 
-                        <button type="button" class="add-to-cart-btn" id="addToCartBtn">
-                            Add to Cart
-                        </button>
+                    <button
+                        type="button"
+                        class="add-to-cart-btn ${product.stock <= 0 ? 'disabled-btn' : ''}"
+                        id="addToCartBtn"
+                        ${product.stock <= 0 ? 'disabled' : ''}
+                    >
+                        ${product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
+                    </button>
                     </div>
 
                     <div class="product-meta">
@@ -98,7 +107,11 @@ function renderProductPage() {
             render();
         });
 
+        const addToCartBtn = document.getElementById("addToCartBtn");
+
         addToCartBtn?.addEventListener("click", () => {
+            if (product.stock <= 0) return;
+
             if (!isUserLoggedIn()) {
                 alert("Please log in first before adding items to your cart.");
                 window.location.href = "login.html";

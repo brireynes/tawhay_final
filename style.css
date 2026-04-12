@@ -694,6 +694,24 @@ img {
     margin-bottom: 24px;
 }
 
+.product-stock {
+    margin-bottom: 14px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.product-stock.in {
+    color: #36543b;
+}
+
+.product-stock.low {
+    color: #b88e2f;
+}
+
+.product-stock.out {
+    color: #c94b4b;
+}
+
 .variation-label,
 .quantity-label {
     margin-bottom: 10px;
