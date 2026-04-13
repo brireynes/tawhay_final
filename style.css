@@ -2343,6 +2343,42 @@ body[data-page="admin"] .tw-nav a {
         padding-top: 148px;
     }
 
+    .home-best-selling {
+        padding: 20px 14px 28px;
+    }
+    
+    .home-best-selling-head {
+        margin-bottom: 14px;
+    }
+    
+    .home-best-selling-head h2 {
+        font-size: 18px;
+    }
+    
+    .home-best-selling-head a {
+        font-size: 13px;
+    }
+    
+    .home-products-grid {
+        gap: 22px;
+    }
+    
+    .home-product-card {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+    
+    .home-product-circle {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 12px;
+    }
+    
+    .home-product-card h3 {
+        font-size: 13px;
+        line-height: 1.35;
+    }
+    
     .tw-header-inner {
         min-height: auto;
         padding: 12px 14px;
@@ -2772,13 +2808,27 @@ body[data-page="admin"] .tw-nav a {
 
     .tw-footer-features {
         grid-template-columns: 1fr;
-        padding: 20px 14px;
-        gap: 16px;
+        padding: 18px 16px;
+        gap: 14px;
     }
-
+    
     .tw-feature {
-        align-items: flex-start;
+        align-items: center;
         gap: 12px;
+    }
+    
+    .tw-feature .material-symbols-outlined {
+        font-size: 30px;
+    }
+    
+    .tw-feature h4 {
+        font-size: 16px;
+        margin-bottom: 2px;
+    }
+    
+    .tw-feature p {
+        font-size: 13px;
+        line-height: 1.4;
     }
 
     .tw-feature .material-symbols-outlined {
@@ -2794,29 +2844,47 @@ body[data-page="admin"] .tw-nav a {
     }
 
     .tw-footer-main {
-        padding: 24px 14px 18px;
+        padding: 24px 18px 18px;
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 22px;
     }
-
+    
     .tw-footer-brand {
+        flex-direction: row;
+        align-items: center;
         gap: 12px;
+        text-align: left;
     }
-
+    
     .tw-footer-logo {
-        height: 58px;
+        height: 52px;
+        flex-shrink: 0;
     }
-
-    .tw-footer-column h4,
+    
     .tw-footer-brand h3 {
-        font-size: 17px;
+        font-size: 18px;
+        margin-bottom: 0;
     }
-
+    
+    .tw-footer-column {
+        text-align: left;
+    }
+    
+    .tw-footer-column h4 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
     .tw-footer-column p,
-    .tw-footer-brand p,
     .tw-footer-column a {
         font-size: 14px;
-        line-height: 1.6;
+        line-height: 1.55;
+        margin-bottom: 8px;
+    }
+    
+    .tw-footer-socials {
+        margin-top: 8px;
+        gap: 12px;
     }
 
     .tw-footer-links {
