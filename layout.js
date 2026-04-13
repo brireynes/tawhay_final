@@ -89,6 +89,7 @@ function configureAdminChrome() {
 
 function initializeSharedUI() {
     if (typeof updateCartCount === "function") updateCartCount();
+    if (typeof updateWishlistCount === "function") updateWishlistCount();
     if (typeof checkUserState === "function") checkUserState();
     if (typeof initializeSearchUI === "function") initializeSearchUI();
 

@@ -249,7 +249,106 @@ function reduceStockFromCart(cartItems) {
 
     saveStoredProducts(products);
 }
+const WISHLIST_STORAGE_KEY = "tawhayWishlist";
 
+function getCurrentUserSafe() {
+    return JSON.parse(localStorage.getItem("tawhayCurrentUser")) || null;
+}
+
+function getWishlistStore() {
+    return JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY)) || {};
+}
+
+function saveWishlistStore(store) {
+    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(store));
+}
+
+function getWishlistForCurrentUser() {
+    const currentUser = getCurrentUserSafe();
+    if (!currentUser?.email) return [];
+
+    const store = getWishlistStore();
+    return Array.isArray(store[currentUser.email]) ? store[currentUser.email] : [];
+}
+
+function saveWishlistForCurrentUser(productIds) {
+    const currentUser = getCurrentUserSafe();
+    if (!currentUser?.email) return;
+
+    const store = getWishlistStore();
+    store[currentUser.email] = productIds;
+    saveWishlistStore(store);
+}
+
+function isInWishlist(productId) {
+    return getWishlistForCurrentUser().includes(productId);
+}
+
+function addToWishlist(productId) {
+    const currentUser = getCurrentUserSafe();
+    if (!currentUser?.email) {
+        alert("Please log in first to save items to your wishlist.");
+        window.location.href = "login.html";
+        return false;
+    }
+
+    const product = getProductById(productId);
+    if (!product) {
+        alert("Product not found.");
+        return false;
+    }
+
+    const wishlist = getWishlistForCurrentUser();
+
+    if (wishlist.includes(productId)) {
+        return true;
+    }
+
+    wishlist.push(productId);
+    saveWishlistForCurrentUser(wishlist);
+    updateWishlistCount();
+    return true;
+}
+
+function removeFromWishlist(productId) {
+    const currentUser = getCurrentUserSafe();
+    if (!currentUser?.email) return false;
+
+    const wishlist = getWishlistForCurrentUser().filter((id) => id !== productId);
+    saveWishlistForCurrentUser(wishlist);
+    updateWishlistCount();
+    return true;
+}
+
+function toggleWishlist(productId) {
+    if (isInWishlist(productId)) {
+        removeFromWishlist(productId);
+        return false;
+    }
+
+    addToWishlist(productId);
+    return true;
+}
+
+function getWishlistProductsForCurrentUser() {
+    const wishlistIds = getWishlistForCurrentUser();
+    return wishlistIds
+        .map((id) => getProductById(id))
+        .filter(Boolean);
+}
+
+function updateWishlistCount() {
+    const countEl = document.getElementById("wishlist-count");
+    if (!countEl) return;
+
+    const currentUser = getCurrentUserSafe();
+    if (!currentUser?.email) {
+        countEl.textContent = "0";
+        return;
+    }
+
+    countEl.textContent = String(getWishlistForCurrentUser().length);
+}
 function formatPricePHP(value) {
     return `Php ${Number(value).toFixed(2)}`;
 }
@@ -456,7 +555,8 @@ function logoutUser() {
 function checkUserState() {
     const accountBtn = document.getElementById("accountBtn");
     const cartIcon = document.querySelector(".cart-icon");
-    const user = JSON.parse(localStorage.getItem("tawhayCurrentUser"));
+    const wishlistIcon = document.querySelector(".wishlist-icon");
+    const user = getCurrentUserSafe();
 
     if (!accountBtn) return;
 
@@ -472,10 +572,15 @@ function checkUserState() {
             cartIcon.style.display = "none";
         }
 
+        if (wishlistIcon) {
+            wishlistIcon.classList.add("hidden");
+        }
+
+        updateWishlistCount();
         return;
     }
 
-    // ADMIN (logout only)
+    // ADMIN
     if (user.role === "admin") {
         accountBtn.innerHTML = `
             <button class="tw-icon-btn" onclick="logoutUser()" title="Logout">
@@ -484,13 +589,18 @@ function checkUserState() {
         `;
 
         if (cartIcon) {
-            cartIcon.style.display = "flex";
+            cartIcon.style.display = "none";
         }
 
+        if (wishlistIcon) {
+            wishlistIcon.classList.add("hidden");
+        }
+
+        updateWishlistCount();
         return;
     }
 
-    // ✅ USER (KEEP user icon + ADD logout icon)
+    // NORMAL USER
     accountBtn.innerHTML = `
         <div style="display:flex; align-items:center; gap:12px;">
             <a href="dashboard.html" class="tw-icon-link" title="Dashboard">
@@ -506,9 +616,16 @@ function checkUserState() {
             </button>
         </div>
     `;
+
     if (cartIcon) {
         cartIcon.style.display = "flex";
     }
+
+    if (wishlistIcon) {
+        wishlistIcon.classList.remove("hidden");
+    }
+
+    updateWishlistCount();
 }
 
 function isUserLoggedIn() {

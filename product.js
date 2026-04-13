@@ -50,12 +50,12 @@ function renderProductPage() {
 
                     <div class="quantity-label">Quantity</div>
                     <div class="purchase-row">
-                        <div class="quantity-box">
-                            <button type="button" id="decreaseQty">-</button>
-                            <span id="qtyValue">${quantity}</span>
-                            <button type="button" id="increaseQty">+</button>
-                        </div>
-
+                    <div class="quantity-box">
+                        <button type="button" id="decreaseQty">-</button>
+                        <span id="qtyValue">${quantity}</span>
+                        <button type="button" id="increaseQty">+</button>
+                    </div>
+                
                     <button
                         type="button"
                         class="add-to-cart-btn ${product.stock <= 0 ? 'disabled-btn' : ''}"
@@ -64,7 +64,17 @@ function renderProductPage() {
                     >
                         ${product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
                     </button>
-                    </div>
+                
+                    <button
+                        type="button"
+                        class="wishlist-btn ${isInWishlist(product.id) ? 'active' : ''}"
+                        id="wishlistBtn"
+                        title="Add to Wishlist"
+                        aria-label="Add to Wishlist"
+                    >
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                </div>
 
                     <div class="product-meta">
                         <p>SKU: ${product.sku}</p>
@@ -163,6 +173,20 @@ function renderProductPage() {
 
             saveCart(cart);
             alert("Product added to cart.");
+        });
+        const wishlistBtn = document.getElementById("wishlistBtn");
+
+        wishlistBtn?.addEventListener("click", () => {
+            if (!isUserLoggedIn()) {
+                alert("Please log in first to save items to your wishlist.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const added = toggleWishlist(product.id);
+            wishlistBtn.classList.toggle("active", added);
+
+            alert(added ? "Added to wishlist." : "Removed from wishlist.");
         });
     }
 
