@@ -39,6 +39,17 @@ function getStatusSteps(status) {
     }));
 }
 
+function formatTrackingAddress(billing = {}) {
+    return [
+        `${billing.firstName || ""} ${billing.lastName || ""}`.trim(),
+        billing.street || "",
+        [billing.city, billing.province].filter(Boolean).join(", "),
+        [billing.country, billing.zip].filter(Boolean).join(" "),
+        billing.phone ? `Phone: ${billing.phone}` : "",
+        billing.email ? `Email: ${billing.email}` : ""
+    ].filter(Boolean).join("<br>");
+}
+
 function renderTrackOrder() {
     const container = document.getElementById("track-order-content");
     if (!container) return;
@@ -66,6 +77,9 @@ function renderTrackOrder() {
     const status = order.status || "Order Placed";
     const steps = getStatusSteps(status);
 
+    const billing = order.billing || {};
+    const deliveryEstimate = order.deliveryEstimate || order.estimate || "3–5 business days";
+
     container.innerHTML = `
         <div class="confirmation-state">
             <span class="material-symbols-outlined confirmation-icon">local_shipping</span>
@@ -73,7 +87,7 @@ function renderTrackOrder() {
             <p>Order ID: <strong>${order.id}</strong></p>
             <p>Current Status: <strong>${status}</strong></p>
         </div>
-
+    
         <div class="track-order-box">
             <div class="track-order-steps">
                 ${steps.map((step) => `
@@ -84,7 +98,45 @@ function renderTrackOrder() {
                 `).join("")}
             </div>
         </div>
-
+    
+        <div class="track-details-grid">
+            <div class="track-detail-card">
+                <h3>Shipping Information</h3>
+                <p>${formatTrackingAddress(billing)}</p>
+            </div>
+    
+            <div class="track-detail-card">
+                <h3>Delivery Timeframe</h3>
+                <p><strong>Estimated Delivery:</strong> ${deliveryEstimate}</p>
+                <p>Your delivery estimate may vary slightly depending on your location and courier handling time.</p>
+            </div>
+    
+            <div class="track-detail-card track-detail-card-wide">
+                <h3>Logistics Flow</h3>
+                <div class="logistics-flow">
+                    <div class="logistics-step ${status === "Order Placed" || status === "Processing" || status === "Shipped" || status === "Completed" ? "active" : ""}">
+                        <strong>1. Order Placed</strong>
+                        <p>Your order has been received and recorded by Tawhay Wellness.</p>
+                    </div>
+    
+                    <div class="logistics-step ${status === "Processing" || status === "Shipped" || status === "Completed" ? "active" : ""}">
+                        <strong>2. Processing</strong>
+                        <p>Your items are being checked, packed, and prepared for shipment.</p>
+                    </div>
+    
+                    <div class="logistics-step ${status === "Shipped" || status === "Completed" ? "active" : ""}">
+                        <strong>3. Courier Handling</strong>
+                        <p>Your parcel is turned over to a courier partner for delivery.</p>
+                    </div>
+    
+                    <div class="logistics-step ${status === "Completed" ? "active" : ""}">
+                        <strong>4. Delivered</strong>
+                        <p>Your order has reached its destination and has been marked as completed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
         <div class="order-confirmation-actions">
             <a href="dashboard.html" class="primary-btn">My Dashboard</a>
             <a href="shop.html" class="primary-btn">Continue Shopping</a>
