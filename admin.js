@@ -87,7 +87,14 @@ function renderAdminOrders() {
 
         const card = document.createElement("div");
         card.className = "admin-order-card";
-
+        const itemsHtml = (order.items || []).map(item => {
+            return `
+                <div class="admin-order-item">
+                    <strong>${item.name || "No name"}</strong>
+                    <div>Qty: ${item.quantity}</div>
+                </div>
+            `;
+        }).join("");
         card.innerHTML = `
             <div class="admin-order-header">
                 <div>
@@ -102,7 +109,10 @@ function renderAdminOrders() {
                     <p><strong>Address:</strong> ${address}</p>
                     <p><strong>City/Province:</strong> ${city}, ${province}</p>
                 </div>
-
+                <div class="admin-order-items">
+                    <h4>Items</h4>
+                    ${itemsHtml}
+                </div>
                 <div class="admin-order-box">
                     <p><strong>Total:</strong> ₱${total}</p>
                     <p><strong>Payment:</strong> ${paymentMethod}</p>

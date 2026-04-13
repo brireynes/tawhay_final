@@ -3,6 +3,11 @@ function getOrderIdFromURL() {
     return params.get("orderId");
 }
 
+function findOrderById(orderId) {
+    const orders = getOrders();
+    return orders.find(order => order.id === orderId) || null;
+}
+
 function renderOrderConfirmation() {
     const container = document.getElementById("order-confirmation-content");
     if (!container) return;
