@@ -455,6 +455,7 @@ function logoutUser() {
 
 function checkUserState() {
     const accountBtn = document.getElementById("accountBtn");
+    const cartIcon = document.querySelector(".cart-icon");
     const user = JSON.parse(localStorage.getItem("tawhayCurrentUser"));
 
     if (!accountBtn) return;
@@ -466,6 +467,11 @@ function checkUserState() {
                 <span class="material-symbols-outlined">person</span>
             </a>
         `;
+
+        if (cartIcon) {
+            cartIcon.style.display = "none";
+        }
+
         return;
     }
 
@@ -476,6 +482,11 @@ function checkUserState() {
                 <span class="material-symbols-outlined">logout</span>
             </button>
         `;
+
+        if (cartIcon) {
+            cartIcon.style.display = "flex";
+        }
+
         return;
     }
 
@@ -495,6 +506,9 @@ function checkUserState() {
             </button>
         </div>
     `;
+    if (cartIcon) {
+        cartIcon.style.display = "flex";
+    }
 }
 
 function isUserLoggedIn() {
