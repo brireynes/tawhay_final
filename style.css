@@ -2190,6 +2190,12 @@ img {
     margin-top: 12px;
 }
 
+.my-order-actions {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 @media (max-width: 768px) {
     .my-order-top {
         flex-direction: column;

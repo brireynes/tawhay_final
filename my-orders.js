@@ -25,8 +25,13 @@ function getOrdersForCurrentUser() {
 
     if (!currentUser) return [];
 
+    const currentEmail = (currentUser.email || "").toLowerCase();
+
     return allOrders.filter((order) => {
-        return order.customer && order.customer.email === currentUser.email;
+        const userEmail = (order.userEmail || "").toLowerCase();
+        const billingEmail = (order.billing?.email || "").toLowerCase();
+
+        return userEmail === currentEmail || billingEmail === currentEmail;
     });
 }
 
@@ -82,8 +87,9 @@ function renderOrders() {
                 <div class="my-order-meta-grid">
                     <div class="my-order-meta-box">
                         <h4>Order Details</h4>
-                        <p><strong>Payment:</strong> ${order.payment.method}</p>
+                        <p><strong>Payment:</strong> ${order.paymentMethod || "N/A"}</p>
                         <p><strong>Total:</strong> ${formatPrice(order.total)}</p>
+                        <p><strong>Delivery Estimate:</strong> ${order.deliveryEstimate || order.estimate || "3–5 business days"}</p>
                         <p><strong>Delivery Estimate:</strong> ${order.deliveryEstimate}</p>
                     </div>
 
@@ -99,6 +105,11 @@ function renderOrders() {
                 <div class="my-order-items-box">
                     <h4>Items Ordered</h4>
                     ${itemsHtml}
+                </div>
+                <div class="my-order-actions">
+                    <a href="track-order.html?orderId=${encodeURIComponent(order.id)}" class="primary-btn">
+                        Track Order
+                    </a>
                 </div>
             </article>
         `;

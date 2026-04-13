@@ -482,17 +482,17 @@ function checkUserState() {
     // ✅ USER (KEEP user icon + ADD logout icon)
     accountBtn.innerHTML = `
         <div style="display:flex; align-items:center; gap:12px;">
-            
-            <!-- USER ICON -->
             <a href="dashboard.html" class="tw-icon-link" title="Dashboard">
                 <span class="material-symbols-outlined">person</span>
             </a>
 
-            <!-- LOGOUT ICON -->
+            <a href="my-orders.html" class="tw-icon-link" title="Track Orders">
+                <span class="material-symbols-outlined">package_2</span>
+            </a>
+
             <button class="tw-icon-btn" onclick="logoutUser()" title="Logout">
                 <span class="material-symbols-outlined">logout</span>
             </button>
-
         </div>
     `;
 }

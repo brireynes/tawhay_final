@@ -43,7 +43,7 @@ function renderOrderItems(items) {
 }
 
 function renderOrderConfirmation() {
-    const container = document.getElementById("orderConfirmationCard");
+    const container = document.getElementById("order-confirmation-content");
     if (!container) return;
 
     const orderId = getOrderIdFromURL();
@@ -99,10 +99,6 @@ function renderOrderConfirmation() {
             </a>
         </div>
     `;
-    const trackOrderBtn = document.getElementById("trackOrderBtn");
-    if (trackOrderBtn && order?.id) {
-        trackOrderBtn.href = `track-order.html?orderId=${encodeURIComponent(order.id)}`;
-    }
 }
 
 document.addEventListener("DOMContentLoaded", renderOrderConfirmation);
