@@ -1092,20 +1092,34 @@ img {
     }
 
     .tw-header-inner {
-        min-height: 88px;
-        padding: 12px 18px;
-        flex-direction: column;
+        min-height: auto;
+        padding: 10px 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tw-brand {
+        flex: 1;
+    }
+
+    .tw-nav {
+        width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .tw-header-actions {
+        gap: 10px;
+    }
+
+    .tw-icon-btn .material-symbols-outlined,
+    .tw-icon-link .material-symbols-outlined {
+        font-size: 24px;
     }
 
     .tw-brand-name {
         font-size: 20px;
-    }
-
-    .tw-nav {
-        gap: 16px;
-        flex-wrap: wrap;
-        justify-content: center;
     }
 
     .tw-search.active .tw-search-input,
@@ -1739,9 +1753,15 @@ img {
 }
 
 @media (max-width: 768px) {
-    .home-hero {
-        height: 360px;
+ .home-hero {
+        min-height: 300px;
     }
+
+    .home-hero-image {
+        object-fit: contain;
+        background: #e8ddd1;
+    }
+}
 
     .home-hero-overlay {
         padding-bottom: 26px;
@@ -2813,5 +2833,66 @@ body[data-page="admin"] .tw-nav a {
 @media (max-width: 768px) {
     .logistics-flow {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .cart-layout,
+    .checkout-layout,
+    .product-top,
+    .track-details-grid,
+    .order-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .purchase-row,
+    .order-confirmation-actions,
+    .wishlist-actions,
+    .my-order-actions,
+    .dashboard-order-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .primary-btn,
+    .add-to-cart-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .shop-grid-wrap,
+    .product-page,
+    .cart-page,
+    .checkout-page {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .order-confirmation-card,
+    .my-order-card,
+    .dashboard-section,
+    .admin-order-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-title {
+        font-size: 26px;
+    }
+
+    .page-hero-content h1,
+    .page-hero-content h2 {
+        font-size: 32px;
+    }
+
+    .home-intro-inner h2 {
+        font-size: 20px;
     }
 }
