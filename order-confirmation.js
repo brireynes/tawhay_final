@@ -96,6 +96,10 @@ function renderOrderConfirmation() {
             <a href="cart.html" class="primary-btn secondary-btn">View Cart</a>
         </div>
     `;
+    const trackOrderBtn = document.getElementById("trackOrderBtn");
+    if (trackOrderBtn && order?.id) {
+        trackOrderBtn.href = `track-order.html?orderId=${encodeURIComponent(order.id)}`;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", renderOrderConfirmation);
