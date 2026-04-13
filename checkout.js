@@ -165,6 +165,9 @@ function handleCheckoutForm() {
             return;
         }
 
+        const subtotal = getCartSubtotal(cart);
+        const currentUser = getCurrentUserSafe();
+
         const order = createOrder({
             userEmail: currentUser?.email || billingDetails.email,
 
