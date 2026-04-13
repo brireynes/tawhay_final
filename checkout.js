@@ -207,6 +207,22 @@ function handleCheckoutForm() {
             paymentDetails: paymentDetails
         });
 
+        emailjs.send("service_zawgc1q", "template_dgojwjf", {
+            customer_name: `${billingDetails.firstName} ${billingDetails.lastName}`,
+            customer_email: billingDetails.email,
+            order_id: order.id,
+            payment_method: paymentMethod,
+            total: formatPrice(subtotal),
+            delivery_estimate: "3–5 business days"
+        }).then(
+            () => {
+                console.log("Email sent successfully");
+            },
+            (error) => {
+                console.error("Email failed:", error);
+            }
+        );
+
         reduceStockFromCart(cart);
 
         localStorage.removeItem(CART_KEY);
