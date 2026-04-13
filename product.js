@@ -102,14 +102,22 @@ function renderProductPage() {
         });
 
         document.getElementById("increaseQty").addEventListener("click", () => {
-            quantity += 1;
-            render();
+            const currentStock = Number(product.stock) || 0;
+            if (quantity < currentStock) {
+                quantity += 1;
+                render();
+            }
         });
 
         const addToCartBtn = document.getElementById("addToCartBtn");
 
         addToCartBtn?.addEventListener("click", () => {
             if (product.stock <= 0) return;
+
+            if (quantity > product.stock) {
+                alert(`Only ${product.stock} item(s) available in stock.`);
+                return;
+            }
 
             if (!isUserLoggedIn()) {
                 alert("Please log in first before adding items to your cart.");

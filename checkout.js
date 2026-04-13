@@ -165,9 +165,6 @@ function handleCheckoutForm() {
             return;
         }
 
-        const subtotal = getCartSubtotal(cart);
-        const currentUser = getCurrentUserSafe();
-
         const order = createOrder({
             userEmail: currentUser?.email || billingDetails.email,
 
@@ -182,6 +179,8 @@ function handleCheckoutForm() {
             paymentMethod: paymentMethod,
             paymentDetails: paymentDetails
         });
+
+        reduceStockFromCart(cart);
 
         localStorage.removeItem(CART_KEY);
         window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(order.id)}`;

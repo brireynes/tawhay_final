@@ -213,8 +213,41 @@ const PRODUCT_CATALOG = [
     }
 ];
 
+const PRODUCTS_STORAGE_KEY = "tawhayProducts";
+
+function getStoredProducts() {
+    const storedProducts = JSON.parse(localStorage.getItem(PRODUCTS_STORAGE_KEY));
+
+    if (storedProducts && Array.isArray(storedProducts)) {
+        return storedProducts;
+    }
+
+    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(PRODUCT_CATALOG));
+    return PRODUCT_CATALOG;
+}
+
+function saveStoredProducts(products) {
+    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+}
+
 function getProductById(id) {
-    return PRODUCT_CATALOG.find((product) => product.id === id);
+    return getStoredProducts().find((product) => product.id === id);
+}
+
+function reduceStockFromCart(cartItems) {
+    const products = getStoredProducts();
+
+    cartItems.forEach((cartItem) => {
+        const product = products.find((item) => item.id === cartItem.productId);
+        if (!product) return;
+
+        const orderedQty = Number(cartItem.quantity) || 0;
+        const currentStock = Number(product.stock) || 0;
+
+        product.stock = Math.max(0, currentStock - orderedQty);
+    });
+
+    saveStoredProducts(products);
 }
 
 function formatPricePHP(value) {
