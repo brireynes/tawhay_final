@@ -486,7 +486,7 @@ img {
 /* HERO */
 .page-hero {
     position: relative;
-    height: 316px;
+    min-height: 520px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -497,17 +497,18 @@ img {
     content: "";
     position: absolute;
     inset: 0;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-    filter: blur(6px);
-    transform: scale(1.06);
+    filter: none;
+    transform: none;
 }
 
 .page-hero::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(255, 248, 240, 0.42);
+    background: rgba(255, 248, 240, 0.25);
 }
 
 .page-hero-content {
