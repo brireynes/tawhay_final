@@ -2956,3 +2956,74 @@ body[data-page="admin"] .tw-nav a {
         padding: 24px 16px;
     }
 }
+
+/* ===== FINAL CHATBOT OVERRIDE ===== */
+#tw-chatbot.tw-chatbot {
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    z-index: 99999 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#tw-chat-toggle.tw-chat-toggle {
+    width: 62px !important;
+    height: 62px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    background: #4c6c4f !important;
+    color: #ffffff !important;
+    display: grid !important;
+    place-items: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#tw-chat-toggle.tw-chat-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+}
+
+#tw-chat-toggle .material-symbols-outlined {
+    font-size: 28px !important;
+    line-height: 1 !important;
+}
+
+#tw-chat-panel.tw-chat-panel {
+    width: 320px !important;
+    height: 420px !important;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important;
+    margin-top: 10px !important;
+}
+
+#tw-chat-panel.tw-chat-panel.hidden {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    #tw-chatbot.tw-chatbot {
+        right: 14px !important;
+        bottom: 14px !important;
+    }
+
+    #tw-chat-toggle.tw-chat-toggle {
+        width: 56px !important;
+        height: 56px !important;
+    }
+
+    #tw-chat-toggle .material-symbols-outlined {
+        font-size: 24px !important;
+    }
+
+    #tw-chat-panel.tw-chat-panel {
+        width: calc(100vw - 28px) !important;
+        max-width: 320px !important;
+        height: 380px !important;
+    }
+}
