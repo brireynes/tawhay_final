@@ -144,8 +144,20 @@ function renderProductPage() {
             );
 
             if (existingIndex > -1) {
-                cart[existingIndex].quantity += quantity;
+                const newQuantity = cart[existingIndex].quantity + quantity;
+
+                if (newQuantity > product.stock) {
+                    alert(`Only ${product.stock} item(s) available in stock.`);
+                    return;
+                }
+
+                cart[existingIndex].quantity = newQuantity;
             } else {
+                if (quantity > product.stock) {
+                    alert(`Only ${product.stock} item(s) available in stock.`);
+                    return;
+                }
+
                 cart.push(itemToAdd);
             }
 

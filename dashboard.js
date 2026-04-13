@@ -217,6 +217,12 @@ function renderDashboardOrders() {
                         <h4>Items Ordered</h4>
                         ${itemsHtml}
                     </div>
+
+                    <div class="dashboard-order-actions">
+                        <a href="track-order.html?orderId=${encodeURIComponent(order.id)}" class="primary-btn">
+                            Track Order
+                        </a>
+                    </div>
                 </article>
             `;
         })

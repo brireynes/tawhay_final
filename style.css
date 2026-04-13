@@ -2388,6 +2388,12 @@ img {
     color: #777;
 }
 
+.dashboard-order-actions {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .dashboard-empty-state {
     text-align: center;
 }

@@ -137,6 +137,25 @@ function getCartSubtotal(cart) {
     return cart.reduce((sum, item) => sum + Number(item.price) * Number(item.quantity), 0);
 }
 
+function validateCartStock(cartItems) {
+    for (const cartItem of cartItems) {
+        const product = getProductById(cartItem.productId);
+
+        if (!product) {
+            return `Product not found: ${cartItem.name}`;
+        }
+
+        const availableStock = Number(product.stock) || 0;
+        const requestedQty = Number(cartItem.quantity) || 0;
+
+        if (requestedQty > availableStock) {
+            return `Only ${availableStock} item(s) available for ${cartItem.name}. Please update your cart.`;
+        }
+    }
+
+    return null;
+}
+
 function handleCheckoutForm() {
     const form = document.getElementById("checkout-form");
     if (!form) return;
@@ -145,9 +164,14 @@ function handleCheckoutForm() {
         e.preventDefault();
 
         const cart = normalizeCartItems(getCart());
-
         if (!cart.length) {
             alert("Your cart is empty.");
+            return;
+        }
+
+        const stockError = validateCartStock(cart);
+        if (stockError) {
+            alert(stockError);
             return;
         }
 

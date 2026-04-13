@@ -94,6 +94,9 @@ function renderOrderConfirmation() {
         <div class="confirmation-actions">
             <a href="shop.html" class="primary-btn">Continue Shopping</a>
             <a href="cart.html" class="primary-btn secondary-btn">View Cart</a>
+            <a href="track-order.html?orderId=${encodeURIComponent(order.id)}" class="primary-btn">
+                Track Order
+            </a>
         </div>
     `;
     const trackOrderBtn = document.getElementById("trackOrderBtn");
