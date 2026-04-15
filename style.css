@@ -3025,73 +3025,178 @@ body[data-page="admin"] .tw-nav a {
     }
 }
 
-/* ===== FINAL CHATBOT OVERRIDE ===== */
+/* =========================================================
+   CHATBOT
+========================================================= */
+
 #tw-chatbot.tw-chatbot {
-    position: fixed !important;
-    right: 20px !important;
-    bottom: 20px !important;
-    z-index: 99999 !important;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
 }
 
 #tw-chat-toggle.tw-chat-toggle {
-    width: 62px !important;
-    height: 62px !important;
-    border: none !important;
-    border-radius: 999px !important;
-    background: #4c6c4f !important;
-    color: #ffffff !important;
-    display: grid !important;
-    place-items: center !important;
-    cursor: pointer !important;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18) !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    width: 72px;
+    height: 72px;
+    border: 1.5px solid #d8d1c7;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #222222;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: Arial, sans-serif;
 }
 
 #tw-chat-toggle.tw-chat-toggle:hover {
     transform: translateY(-2px);
-    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
 }
 
-#tw-chat-toggle .material-symbols-outlined {
-    font-size: 28px !important;
-    line-height: 1 !important;
+.tw-chat-toggle-label {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    color: #222222;
 }
 
 #tw-chat-panel.tw-chat-panel {
-    width: 320px !important;
-    height: 420px !important;
-    background: #ffffff !important;
-    border-radius: 18px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-    overflow: hidden !important;
-    margin-top: 10px !important;
+    width: 360px;
+    height: 500px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 #tw-chat-panel.tw-chat-panel.hidden {
     display: none !important;
 }
 
+.tw-chat-header {
+    padding: 18px 20px 14px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c2c2c;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+}
+
+.tw-chat-messages {
+    flex: 1;
+    padding: 18px 18px 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #ffffff;
+    align-items: stretch;
+}
+
+.tw-msg {
+    max-width: 85%;
+    padding: 12px 14px;
+    border-radius: 16px;
+    line-height: 1.5;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.tw-msg.user {
+    align-self: flex-end;
+    background: #4c6c4f;
+    color: #ffffff;
+    border-bottom-right-radius: 6px;
+}
+
+.tw-msg.bot {
+    align-self: flex-start;
+    background: #f3ede6;
+    color: #2a2a2a;
+    border-bottom-left-radius: 6px;
+}
+
+.tw-chat-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+}
+
+#tw-chat-input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    border: 1px solid #d5d5d5;
+    border-radius: 12px;
+    padding: 0 14px;
+    font-size: 14px;
+    outline: none;
+}
+
+#tw-chat-input:focus {
+    border-color: #4c6c4f;
+}
+
+#tw-chat-send {
+    height: 44px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 12px;
+    background: #4c6c4f;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#tw-chat-send:hover {
+    opacity: 0.92;
+}
+
 @media (max-width: 768px) {
     #tw-chatbot.tw-chatbot {
-        right: 14px !important;
-        bottom: 14px !important;
+        right: 14px;
+        bottom: 14px;
     }
 
     #tw-chat-toggle.tw-chat-toggle {
-        width: 56px !important;
-        height: 56px !important;
+        width: 64px;
+        height: 64px;
     }
 
-    #tw-chat-toggle .material-symbols-outlined {
-        font-size: 24px !important;
+    .tw-chat-toggle-label {
+        font-size: 14px;
     }
 
     #tw-chat-panel.tw-chat-panel {
-        width: calc(100vw - 28px) !important;
-        max-width: 320px !important;
-        height: 380px !important;
+        width: calc(100vw - 28px);
+        max-width: 340px;
+        height: 430px;
+        border-radius: 20px;
+    }
+
+    .tw-chat-header {
+        font-size: 18px;
+        padding: 16px 16px 12px;
+    }
+
+    .tw-chat-messages {
+        padding: 16px 14px 10px;
+    }
+
+    .tw-chat-input-row {
+        padding: 12px 14px 14px;
     }
 }
