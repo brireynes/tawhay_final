@@ -214,20 +214,25 @@ function handleCheckoutForm() {
             payment_method: paymentMethod,
             total: formatPrice(subtotal),
             delivery_estimate: "3–5 business days"
-        }).then(
-            () => {
-                console.log("Email sent successfully");
-            },
-            (error) => {
-                console.error("Email failed:", error);
-            }
-        );
-
-        reduceStockFromCart(cart);
-
-        localStorage.removeItem(CART_KEY);
-        window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(order.id)}`;
-    });
+        })
+        .then(() => {
+            alert("✅ Order placed! Confirmation email sent.");
+        
+            reduceStockFromCart(cart);
+            localStorage.removeItem(CART_KEY);
+        
+            window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(order.id)}`;
+        })
+        .catch((error) => {
+            alert("⚠️ Order placed, but email failed. Check console.");
+        
+            console.error("Email failed:", error);
+        
+            reduceStockFromCart(cart);
+            localStorage.removeItem(CART_KEY);
+        
+            window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(order.id)}`;
+        });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
