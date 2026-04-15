@@ -4,14 +4,14 @@ function renderCheckoutSummary() {
     const checkoutSubtotal = document.getElementById("checkout-subtotal");
     const checkoutTotal = document.getElementById("checkout-total");
 
-    if (!checkoutItems) return;
+    if (!checkoutItems || !checkoutSubtotal || !checkoutTotal) return;
 
     checkoutItems.innerHTML = "";
 
     let subtotal = 0;
 
     cart.forEach((item) => {
-        const itemSubtotal = Number(item.price) * Number(item.quantity);
+        const itemSubtotal = Number(item.price || 0) * Number(item.quantity || 0);
         subtotal += itemSubtotal;
 
         const row = document.createElement("div");
@@ -52,15 +52,16 @@ function togglePaymentFields() {
         cardBox.classList.remove("hidden");
     } else if (method === "GCash") {
         gcashBox.classList.remove("hidden");
-    } else {
+    } else if (method === "Cash On Delivery") {
         codBox.classList.remove("hidden");
     }
 }
 
 function attachPaymentMethodEvents() {
-    const paymentInputs = document.querySelectorAll('input[name="payment"]');
-    paymentInputs.forEach((input) => {
-        input.addEventListener("change", togglePaymentFields);
+    document.addEventListener("change", (event) => {
+        if (event.target && event.target.matches('input[name="payment"]')) {
+            togglePaymentFields();
+        }
     });
 
     togglePaymentFields();
@@ -118,23 +119,34 @@ function validateBillingDetails(details) {
         details.email
     ];
 
-    return requiredFields.every((value) => value);
+    return requiredFields.every(Boolean);
 }
 
 function validatePaymentDetails(method, details) {
     if (method === "Card") {
-        return details.cardName && details.cardNumber && details.cardExpiry && details.cardCvv;
+        return (
+            details.cardName &&
+            details.cardNumber &&
+            details.cardExpiry &&
+            details.cardCvv
+        );
     }
 
     if (method === "GCash") {
-        return details.gcashName && details.gcashNumber && details.gcashReference;
+        return (
+            details.gcashName &&
+            details.gcashNumber &&
+            details.gcashReference
+        );
     }
 
     return true;
 }
 
 function getCartSubtotal(cart) {
-    return cart.reduce((sum, item) => sum + Number(item.price) * Number(item.quantity), 0);
+    return cart.reduce((sum, item) => {
+        return sum + Number(item.price || 0) * Number(item.quantity || 0);
+    }, 0);
 }
 
 function validateCartStock(cartItems) {
@@ -156,14 +168,46 @@ function validateCartStock(cartItems) {
     return null;
 }
 
+function setCheckoutButtonState(isSubmitting) {
+    const submitBtn = document.querySelector('.checkout-submit-btn');
+    if (!submitBtn) return;
+
+    submitBtn.disabled = isSubmitting;
+    submitBtn.textContent = isSubmitting ? "Processing..." : "Place Order";
+}
+
+function finalizeSuccessfulOrder(cart, orderId) {
+    reduceStockFromCart(cart);
+    localStorage.removeItem(CART_KEY);
+    window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(orderId)}`;
+}
+
+function sendOrderConfirmationEmail(order, billingDetails, paymentMethod, subtotal) {
+    if (typeof emailjs === "undefined") {
+        return Promise.reject(new Error("EmailJS is not loaded."));
+    }
+
+    return emailjs.send("service_zawgc1q", "template_dgojwjf", {
+        customer_name: `${billingDetails.firstName} ${billingDetails.lastName}`.trim(),
+        customer_email: billingDetails.email,
+        order_id: order.id,
+        payment_method: paymentMethod,
+        total: formatPrice(subtotal),
+        delivery_estimate: "3–5 business days"
+    });
+}
+
 function handleCheckoutForm() {
     const form = document.getElementById("checkout-form");
     if (!form) return;
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        console.clear();
+        console.log("Checkout started");
 
         const cart = normalizeCartItems(getCart());
+
         if (!cart.length) {
             alert("Your cart is empty.");
             return;
@@ -190,49 +234,35 @@ function handleCheckoutForm() {
         }
 
         const subtotal = getCartSubtotal(cart);
-        const currentUser = getCurrentUserSafe();
+        const currentUser = typeof getCurrentUserSafe === "function" ? getCurrentUserSafe() : null;
 
         const order = createOrder({
             userEmail: currentUser?.email || billingDetails.email,
-
             customerName: `${billingDetails.firstName} ${billingDetails.lastName}`.trim(),
-
             items: cart,
-            subtotal: subtotal,
+            subtotal,
             total: subtotal,
-
             billing: billingDetails,
-
-            paymentMethod: paymentMethod,
-            paymentDetails: paymentDetails
+            paymentMethod,
+            paymentDetails
         });
 
-        emailjs.send("service_zawgc1q", "template_dgojwjf", {
-            customer_name: `${billingDetails.firstName} ${billingDetails.lastName}`,
-            customer_email: billingDetails.email,
-            order_id: order.id,
-            payment_method: paymentMethod,
-            total: formatPrice(subtotal),
-            delivery_estimate: "3–5 business days"
-        })
-        .then(() => {
-            alert("✅ Order placed! Confirmation email sent.");
-        
-            reduceStockFromCart(cart);
-            localStorage.removeItem(CART_KEY);
-        
-            window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(order.id)}`;
-        })
-        .catch((error) => {
-            alert("⚠️ Order placed, but email failed. Check console.");
-        
+        setCheckoutButtonState(true);
+
+        try {
+            console.log("Order created:", order.id);
+            await sendOrderConfirmationEmail(order, billingDetails, paymentMethod, subtotal);
+            console.log("Email sent successfully");
+            alert("Order placed successfully. Confirmation email sent.");
+            finalizeSuccessfulOrder(cart, order.id);
+        } catch (error) {
             console.error("Email failed:", error);
-        
-            reduceStockFromCart(cart);
-            localStorage.removeItem(CART_KEY);
-        
-            window.location.href = `order-confirmation.html?orderId=${encodeURIComponent(order.id)}`;
-        });
+            alert("Order placed successfully, but confirmation email failed to send.");
+            finalizeSuccessfulOrder(cart, order.id);
+        } finally {
+            setCheckoutButtonState(false);
+        }
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
