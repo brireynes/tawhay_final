@@ -10,7 +10,10 @@ function saveCart(cart) {
 }
 
 function formatPrice(value) {
-    return `Php ${Number(value).toFixed(2)}`;
+    return `Php ${Number(value).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })}`;
 }
 
 function getCartItemId(item) {

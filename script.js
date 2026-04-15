@@ -349,8 +349,12 @@ function updateWishlistCount() {
 
     countEl.textContent = String(getWishlistForCurrentUser().length);
 }
+
 function formatPricePHP(value) {
-    return `Php ${Number(value).toFixed(2)}`;
+    return `Php ${Number(value).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })}`;
 }
 
 function goToProduct(productId) {
